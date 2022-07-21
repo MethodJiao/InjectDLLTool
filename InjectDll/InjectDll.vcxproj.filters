@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="进程函数">
+      <UniqueIdentifier>{c1b56ddf-7516-47c8-a86f-632f79c8bec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="预编译头">
+      <UniqueIdentifier>{30ac3ccc-003a-49cb-b445-73d4557d65d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="主窗口">
+      <UniqueIdentifier>{b1d40c69-b3d6-4a2a-b5a2-a2c044515ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{b5c03029-c3b2-45de-9edd-c81ac5aa91d2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pfunc.h">
+      <Filter>进程函数</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>预编译头</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>预编译头</Filter>
+    </ClInclude>
+    <ClInclude Include="InjectDll.h">
+      <Filter>主窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pfunc.cpp">
+      <Filter>进程函数</Filter>
+    </ClCompile>
+    <ClCompile Include="InjectDll.cpp">
+      <Filter>主窗口</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="InjectDll.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="InjectDll.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
