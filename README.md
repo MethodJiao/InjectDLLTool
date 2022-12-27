@@ -1,7 +1,15 @@
 # InjectDLLTool
 利用Windows API开发的DLL注入工具
 
-![](https://raw.githubusercontent.com/cnsimo/pic_bed/master/20190914005900.png)
+![image](https://user-images.githubusercontent.com/45934872/209620069-3e07ce87-e06d-402b-b15d-bbf67115a7be.png)
+
+1.运行TestDestInject为被注入方程序
+
+2.运行InjectDlg为注入方程序
+
+3.运行点击InjectDlg对话框的注入按钮，然后再点击TestDestInject的刷新按钮发现值已经被注入dll（TestInjectDll）修改
+
+
 ## 为什么要DLL注入？
 有一些操作放在目标程序中比远程执行更方便，可定制性强。注入DLL可以帮助目标程序实现更多功能。
 
