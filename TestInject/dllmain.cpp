@@ -5,7 +5,33 @@
 #include <Windows.h>
 #include <Tlhelp32.h>
 #include <stdio.h>
+#include <vector>
+using namespace std;
+DWORD* getAddrPtr(DWORD firstAddr, DWORD secAddr)
+{
+	DWORD addr = firstAddr + secAddr;
+	DWORD* pAddr = (DWORD*)addr;
+	return pAddr;
+}
 
+DWORD* getFinalAddrPtr(vector<DWORD> addrVec)
+{
+	DWORD* pAddr = nullptr;
+	if (addrVec.size() < 2)
+		return pAddr;
+	for (size_t i = 0; i < addrVec.size() - 1; i++)
+	{
+		if (i == 0)
+		{
+			pAddr = getAddrPtr(addrVec[i], addrVec[i + 1]);
+		}
+		else
+		{
+			pAddr = getAddrPtr(*pAddr, addrVec[i + 1]);
+		}
+	}
+	return pAddr;
+}
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
@@ -16,26 +42,25 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	{
 	case DLL_PROCESS_ATTACH:
 	{
-		int a = 0;
-		MessageBox(NULL, _T("被注入"), _T("test"), MB_OK);
-
+		MessageBeep(MB_OK);
+		//获取目标进程基址
 		HMODULE baseAddr = GetModuleHandle(_T("TestDestInject.exe"));
-		DWORD addr1 = 0x001D5220 + (DWORD)baseAddr;
-		DWORD* pAddr1 = (DWORD*)addr1;
-		DWORD addr2 = *pAddr1 + 0xD4;
-		DWORD* pAddr2 = (DWORD*)addr2;
-		*pAddr2 = 12345678;//改值
+		//寻址
+		vector<DWORD> addrVec = { (DWORD)baseAddr, 0x001D5220, 0xD4 };
+		DWORD* finalAddr = getFinalAddrPtr(addrVec);
+		if (finalAddr == nullptr)
+			break;
+		//改值
+		*finalAddr = 12345678;
 
 		break;
 	}
 	case DLL_THREAD_ATTACH:
 	{
-		int b = 0;
 		break;
 	}
 	case DLL_THREAD_DETACH:
 	{
-		int c = 0;
 		break;
 	}
 	case DLL_PROCESS_DETACH:
