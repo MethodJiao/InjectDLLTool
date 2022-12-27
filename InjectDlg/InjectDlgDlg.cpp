@@ -188,3 +188,14 @@ void CInjectDlgDlg::OnClose()
 	UnInjectDll();
 	CDialogEx::OnClose();
 }
+
+
+BOOL CInjectDlgDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	if (VK_RETURN == pMsg->wParam)
+	{
+		return TRUE;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}

@@ -34,4 +34,5 @@ public:
 	int m_num;
 	afx_msg void OnEnChangeEdit1();
 	afx_msg void OnBnClickedButton1();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

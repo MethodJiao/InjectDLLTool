@@ -38,4 +38,5 @@ public:
 	void UnInjectDll();
 	afx_msg void OnClose();
 	CComboBox m_cbProcessName;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
