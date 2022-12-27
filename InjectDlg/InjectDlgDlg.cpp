@@ -134,7 +134,7 @@ void CInjectDlgDlg::OnBnClickedButtonInject()
 	// dll路径写入内存
 	if (0 == WriteProcessMemory(hProcess, lpDllMem, szDllPath.data(), szDllPath.length() + 1, NULL))
 	{
-		VirtualFreeEx(hProcess, lpDllMem, szDllPath.length() + 1, MEM_RELEASE);
+		VirtualFreeEx(hProcess, lpDllMem, szDllPath.length() + 1, MEM_DECOMMIT);
 		CloseHandle(hProcess);
 		return;
 	}
@@ -148,7 +148,7 @@ void CInjectDlgDlg::OnBnClickedButtonInject()
 	HANDLE hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)lpLoadLibAddr, lpDllMem, 0, 0);
 	if (!hThread)
 	{
-		VirtualFreeEx(hProcess, lpDllMem, szDllPath.length() + 1, MEM_RELEASE);
+		VirtualFreeEx(hProcess, lpDllMem, szDllPath.length() + 1, MEM_DECOMMIT);
 		CloseHandle(hProcess);
 		return;
 	}
