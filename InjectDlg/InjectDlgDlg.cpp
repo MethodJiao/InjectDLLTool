@@ -52,7 +52,7 @@ BOOL CInjectDlgDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_dllname.SetWindowText(_T("TestInject.dll"));
+	m_dllname.SetWindowText(_T("TestInjectDll.dll"));
 	//m_processname.SetWindowText(_T("WXWork.exe"));
 	traverseProcesses(m_processNameVec);
 	for (size_t i = 0; i < m_processNameVec.size(); i++)
@@ -62,7 +62,7 @@ BOOL CInjectDlgDlg::OnInitDialog()
 		m_cbProcessName.AddString(processName);
 	}
 	//临时
-	m_cbProcessName.SelectString(-1, _T("WXWork.exe"));
+	m_cbProcessName.SelectString(-1, _T("TestDestInject.exe"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
