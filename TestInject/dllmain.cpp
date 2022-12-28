@@ -42,17 +42,27 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	{
 	case DLL_PROCESS_ATTACH:
 	{
-		MessageBeep(MB_OK);
+		HANDLE handle = CreateMutex(NULL, true, TEXT("injectdll"));
+
 		//获取目标进程基址
 		HMODULE baseAddr = GetModuleHandle(_T("TestDestInject.exe"));
 		//寻址
-		vector<DWORD> addrVec = { (DWORD)baseAddr, 0x001D5220, 0xD4 };
+		//x86 release 
+		// vector<DWORD> addrVec = { (DWORD)baseAddr, 0x001D5220, 0xD4 };
+		//x86 debug
+		vector<DWORD> addrVec = { (DWORD)baseAddr, 0x00BC6470, 0xD4 };
 		DWORD* finalAddr = getFinalAddrPtr(addrVec);
 		if (finalAddr == nullptr)
 			break;
 		//改值
 		*finalAddr = 12345678;
 
+		MessageBeep(MB_OK);
+		ReleaseMutex(handle);
+		if (handle != NULL)
+		{
+			CloseHandle(handle);
+		}
 		break;
 	}
 	case DLL_THREAD_ATTACH:

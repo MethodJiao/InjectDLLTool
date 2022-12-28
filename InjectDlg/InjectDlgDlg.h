@@ -32,11 +32,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CEdit m_dllname;
-	CEdit m_processname;
+	CEdit m_info;
 	std::vector<std::string> m_processNameVec;
 	afx_msg void OnBnClickedButtonInject();
 	void UnInjectDll();
 	afx_msg void OnClose();
 	CComboBox m_cbProcessName;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	CButton m_btnInject;
 };

@@ -28,8 +28,9 @@ void CInjectDlgDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT_DLLNAME, m_dllname);
-	DDX_Control(pDX, IDC_EDIT_PROCESSNAME, m_processname);
+	DDX_Control(pDX, IDC_EDIT_PROCESSNAME, m_info);
 	DDX_Control(pDX, IDC_COMBO_PROCESSNAME, m_cbProcessName);
+	DDX_Control(pDX, IDC_BUTTON_INJECT, m_btnInject);
 }
 
 BEGIN_MESSAGE_MAP(CInjectDlgDlg, CDialogEx)
@@ -52,6 +53,7 @@ BOOL CInjectDlgDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	m_info.SetWindowText(_T(""));
 	m_dllname.SetWindowText(_T("TestInjectDll.dll"));
 	//m_processname.SetWindowText(_T("WXWork.exe"));
 	traverseProcesses(m_processNameVec);
@@ -106,7 +108,8 @@ HCURSOR CInjectDlgDlg::OnQueryDragIcon()
 //注入按钮
 void CInjectDlgDlg::OnBnClickedButtonInject()
 {
-	UnInjectDll();
+	m_btnInject.EnableWindow(FALSE);
+	
 	//获取exe路径
 	string exePath = GetExePath();
 
@@ -144,6 +147,7 @@ void CInjectDlgDlg::OnBnClickedButtonInject()
 	{
 		return;
 	}
+
 	LPVOID lpLoadLibAddr = GetProcAddress(hK32, "LoadLibraryA");
 	HANDLE hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)lpLoadLibAddr, lpDllMem, 0, 0);
 	if (!hThread)
@@ -152,6 +156,23 @@ void CInjectDlgDlg::OnBnClickedButtonInject()
 		CloseHandle(hProcess);
 		return;
 	}
+	HANDLE handle;
+	while (true)
+	{
+		handle = OpenMutex(MUTEX_ALL_ACCESS, FALSE, TEXT("injectdll"));
+		if (handle != NULL)
+		{
+			break;
+		}
+	}
+
+	DWORD res = WaitForSingleObject(handle, INFINITE);
+	ReleaseMutex(handle);
+	if (handle != NULL)
+	{
+		CloseHandle(handle);
+	}
+	m_info.SetWindowText(_T("注入成功"));
 }
 
 void CInjectDlgDlg::UnInjectDll()
@@ -173,12 +194,14 @@ void CInjectDlgDlg::UnInjectDll()
 		CloseHandle(hProcess);
 		return;
 	}
+
 	HANDLE hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)lpFreeLibAddr, hDll, 0, 0);
 	if (!hThread)
 	{
 		CloseHandle(hProcess);
 		return;
 	}
+
 }
 
 
