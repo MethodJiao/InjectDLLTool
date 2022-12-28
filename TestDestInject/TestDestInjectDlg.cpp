@@ -100,6 +100,19 @@ void CTestDestInjectDlg::OnEnChangeEdit1()
 	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
 
 	// TODO:  在此添加控件通知处理程序代码
+
+	CWnd* cedit =  this->GetDlgItem(IDC_EDIT1);
+	if (cedit == nullptr)
+		return;
+
+	CString str;
+	cedit->GetWindowText(str);
+
+	if (str.IsEmpty())
+	{
+		m_num = 0;
+		return;
+	}
 	UpdateData(TRUE);
 }
 
@@ -118,5 +131,11 @@ BOOL CTestDestInjectDlg::PreTranslateMessage(MSG* pMsg)
 	{
 		return TRUE;
 	}
+	if (GetFocus() != this->GetDlgItem(IDC_EDIT1))
+	{
+		UpdateData(FALSE);
+	}
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
+
+

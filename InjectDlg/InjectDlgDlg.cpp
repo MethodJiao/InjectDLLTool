@@ -64,7 +64,8 @@ BOOL CInjectDlgDlg::OnInitDialog()
 		m_cbProcessName.AddString(processName);
 	}
 	//临时
-	m_cbProcessName.SelectString(-1, _T("TestDestInject.exe"));
+	//m_cbProcessName.SelectString(-1, _T("TestDestInject.exe"));
+	m_cbProcessName.SetWindowText(_T("TestDestInject.exe"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -108,8 +109,9 @@ HCURSOR CInjectDlgDlg::OnQueryDragIcon()
 //注入按钮
 void CInjectDlgDlg::OnBnClickedButtonInject()
 {
-	m_btnInject.EnableWindow(FALSE);
-	
+	//m_btnInject.EnableWindow(FALSE);
+	m_info.SetWindowText(_T(""));
+	UnInjectDll();
 	//获取exe路径
 	string exePath = GetExePath();
 
